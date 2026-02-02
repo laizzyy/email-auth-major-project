@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Certimailer Assistant</title>
+
+  <!-- Reuse your website styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="ext-popup gradient-page">
+  <main class="page" style="padding:14px; max-width: 520px;">
+
+    <!-- HEADER -->
+    <!-- TOP HERO -->
+<section class="ext-hero">
+  <p class="ext-kicker">EMAIL SAFETY ASSISTANT</p>
+  <h1 class="ext-title">Certimailer</h1>
+  <p class="ext-subtitle">
+    Check if an email looks safe — no protocol knowledge needed.
+  </p>
+
+  <div class="ext-modes">
+    <button class="mode-pill" id="modeQuick" aria-pressed="true">Quick Check</button>
+    <button class="mode-pill" id="modeGuided" aria-pressed="false">Guided Check</button>
+    <button class="mode-pill" id="modeAdvanced" aria-pressed="false">Advanced</button>
+  </div>
+</section>
+
+
+
+
+    <!-- ERROR BANNER (replaces alerts) -->
+    <section id="errorBox" class="error-box" style="display:none;">
+      <div class="error-title">Can’t analyze this input</div>
+      <div class="error-text" id="errorText">—</div>
+      <div class="error-tip" id="errorTip">—</div>
+    </section>
+
+    <!-- INPUT -->
+    <section class="card" style="margin-top:12px;">
+      <p class="muted">Paste the raw email header text below.</p>
+      <textarea id="raw" class="textarea" placeholder="Paste full header here..."></textarea>
+
+      <div class="row-actions" style="margin-top:12px; gap: 10px; flex-wrap: wrap;">
+        <button class="btn btn-primary" id="analyze" type="button">Check Safety</button>
+        <button class="btn btn-secondary" id="sampleBtn" type="button">Use Sample</button>
+        <button class="btn btn-ghost" id="clearBtn" type="button">Clear</button>
+        <button class="btn btn-secondary" id="exportBtn" type="button" disabled>Export Report</button>
+      </div>
+
+      <p class="muted" style="margin-top:10px; font-size: 12px;">
+        Tip (Gmail): Open email → ⋮ → <b>Show original</b> → copy headers.
+      </p>
+    </section>
+
+    <!-- GUIDED PANEL -->
+    <section id="guidedPanel" class="card guided-panel" style="display:none; margin-top:12px;">
+      <h3 class="guided-title">Guided Check</h3>
+      <p class="guided-subtitle">
+        Tick what applies to this email. Each selection increases risk.
+      </p>
+
+      <div class="guided-list">
+
+        <label class="guided-row">
+          <input type="checkbox" id="gUnexpected" />
+          <span>I wasn’t expecting this email</span>
+        </label>
+
+        <label class="guided-row">
+          <input type="checkbox" id="gUrgent" />
+          <span>It feels urgent / threatening</span>
+        </label>
+
+        <label class="guided-row">
+          <input type="checkbox" id="gLinkOrFile" />
+          <span>It asks me to click a link / open a file</span>
+        </label>
+
+        <label class="guided-row">
+          <input type="checkbox" id="gSensitive" />
+          <span>It asks for OTP / password / personal data</span>
+        </label>
+
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results" style="display:none; margin-top:12px;">
+      <!-- VERDICT -->
+      <section class="card">
+        <p class="kicker">VERDICT</p>
+        <h2 id="verdictTitle" style="margin-top:6px;">—</h2>
+
+        <div class="score-box" style="margin: 14px 0 6px;">
+          <div class="score-pill" id="trustScore">—</div>
+          <span class="muted" style="margin-left: 10px;">Trust Score</span>
+        </div>
+
+        <!-- Confidence pill -->
+        <div style="margin: 8px 0 0;">
+          <span class="pill" id="confidencePill">Confidence: —</span>
+        </div>
+
+        <p class="muted" id="plainSummary" style="margin-top:10px;">—</p>
+      </section>
+
+      <!-- ACTIONS -->
+      <section class="card">
+        <h3 style="margin:0 0 10px;">What you should do</h3>
+        <div id="actionPanel"></div>
+      </section>
+
+      <!-- FINDINGS -->
+      <section class="card">
+        <h3 style="margin:0 0 10px;">Why we flagged this</h3>
+        <div id="findingsList" class="flex-col gap-10"></div>
+      </section>
+
+      <!-- ADVANCED (hidden unless Advanced mode) -->
+<section id="advancedCollapse" class="card" aria-expanded="false" style="margin-top:12px;">
+  <div class="row-actions" style="justify-content: space-between; align-items:center;">
+    <h3 style="margin:0;">Technical Details</h3>
+    <button class="btn btn-ghost" id="toggleAdvanced" type="button">Toggle</button>
+  </div>
+
+  <div class="grid-3 tech-body" style="margin-top: 12px;">
+    <div class="card mini">
+      <h3>SPF</h3>
+      <p class="status" id="spfStatus">—</p>
+      <p class="muted" id="spfExplain">—</p>
+    </div>
+
+    <div class="card mini">
+      <h3>DKIM</h3>
+      <p class="status" id="dkimStatus">—</p>
+      <p class="muted" id="dkimExplain">—</p>
+    </div>
+
+    <div class="card mini">
+      <h3>DMARC</h3>
+      <p class="status" id="dmarcStatus">—</p>
+      <p class="muted" id="dmarcExplain">—</p>
+    </div>
+  </div>
+
+  <section class="card tech-body" style="margin-top:12px;">
+    <h3 style="margin:0 0 10px;">Raw Header</h3>
+    <pre class="pre" id="rawHeader"></pre>
+  </section>
+</section>
+
+  <!-- FOOTER LINK -->
+  <section class="ext-footer">
+    <button class="btn btn-secondary btn-home" id="homeBtn" type="button">
+      Home · Open Certimailer Website
+    </button>
+  </section>
+
+
+
+    </section>
+  </main>
+
+  <!-- IMPORTANT: no inline scripts in extensions (CSP) -->
+  <script src="analyzer-core.js"></script>
+  <script src="jspdf.umd.min.js"></script>
+  <script src="popup.js"></script>
+</html>

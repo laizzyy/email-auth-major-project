@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Certimailer Header Analyzer",
+  "version": "1.1.0",
+  "description": "Analyze email headers and provide passive phishing protection in Gmail.",
+
+  "action": {
+    "default_title": "Certimailer Analyzer",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "https://mail.google.com/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": [
+        "scan-heuristics.js",
+        "content-gmail.js"
+      ],
+      "css": [
+        "scan-ui.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

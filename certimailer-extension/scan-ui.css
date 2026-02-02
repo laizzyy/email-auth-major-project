@@ -1,0 +1,197 @@
+/* =========================
+   CERTIMAILER BANNER (Glass / Pastel)
+   ========================= */
+
+#certi-banner{
+  margin: 10px 0 12px;
+  padding: 16px 16px 14px;
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+
+  /* base “glass” */
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.12);
+
+  /* blur (works in Chrome) */
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #111;
+}
+
+/* Pastel gradient overlay like your reference */
+#certi-banner::before{
+  content:"";
+  position:absolute;
+  inset:-40px;
+  background:
+    radial-gradient(closest-side at 20% 20%, rgba(255, 180, 230, 0.55), transparent 60%),
+    radial-gradient(closest-side at 80% 30%, rgba(160, 210, 255, 0.55), transparent 62%),
+    radial-gradient(closest-side at 40% 90%, rgba(255, 220, 160, 0.55), transparent 62%);
+  filter: blur(12px);
+  opacity: 0.85;
+  pointer-events:none;
+}
+
+/* subtle inner highlight */
+#certi-banner::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: 22px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+  pointer-events:none;
+}
+
+#certi-banner *{ position: relative; } /* keep content above overlays */
+
+#certi-banner .certi-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+#certi-banner .certi-title{
+  font-weight: 800;
+  font-size: 15px;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* Status pill (Likely Safe • Score 85/100) */
+#certi-banner .certi-badge{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  font-size: 12px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.55);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  white-space: nowrap;
+}
+
+/* Optional: add a dot if you have an element for it */
+#certi-banner .certi-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
+}
+
+/* Level colors (affects badge glow + dot if used) */
+#certi-banner[data-level="safe"] .certi-badge{
+  border-color: rgba(34,197,94,0.18);
+  background: rgba(34,197,94,0.10);
+}
+#certi-banner[data-level="safe"] .certi-dot{ background:#22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.18); }
+
+#certi-banner[data-level="caution"] .certi-badge{
+  border-color: rgba(245,158,11,0.22);
+  background: rgba(245,158,11,0.12);
+}
+#certi-banner[data-level="caution"] .certi-dot{ background:#f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.20); }
+
+#certi-banner[data-level="risk"] .certi-badge{
+  border-color: rgba(239,68,68,0.22);
+  background: rgba(239,68,68,0.12);
+}
+#certi-banner[data-level="risk"] .certi-dot{ background:#ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.18); }
+
+/* Body + reasons */
+#certi-banner .certi-body{
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(17,17,17,0.90);
+  line-height: 1.5;
+}
+
+#certi-banner .certi-body strong{
+  font-weight: 800;
+}
+
+#certi-banner ul{
+  margin: 8px 0 0 18px;
+  padding: 0;
+}
+
+#certi-banner li{
+  margin: 6px 0;
+}
+
+/* Divider line like your reference spacing */
+#certi-banner .certi-divider{
+  height: 1px;
+  margin: 12px 0 10px;
+  background: rgba(0,0,0,0.07);
+}
+
+/* Buttons row */
+#certi-banner .certi-actions{
+  margin-top: 12px;
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Modern button */
+#certi-banner button{
+  cursor:pointer;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 700;
+
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.65);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+
+  transition: transform .18s ease, filter .18s ease, background .18s ease;
+}
+
+#certi-banner button:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  background: rgba(255,255,255,0.78);
+}
+
+#certi-banner button:active{
+  transform: translateY(0px) scale(0.99);
+}
+
+/* Primary button (Open report) */
+#certi-banner button.primary{
+  border: 1px solid rgba(0,0,0,0.10);
+  background: linear-gradient(90deg, rgba(255,200,120,0.75), rgba(255,160,210,0.70));
+}
+
+#certi-banner button.primary:hover{
+  filter: brightness(1.03);
+}
+
+/* Secondary button (Dismiss) */
+#certi-banner button.secondary{
+  background: rgba(255,255,255,0.55);
+}
+
+/* Title + logo row */
+.certi-title-wrap{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Logo */
+.certi-logo{
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;      /* soft Apple look */
+  object-fit: contain;
+  flex-shrink: 0;
+}
